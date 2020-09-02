@@ -1,8 +1,18 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import thunx from 'redux-thunk';
 
 import reducers from '../modules/reducers.js';
 
-const store = createStore(reducers, applyMiddleware(thunx));
+let composeEnhances = compose;
 
-export default store;
+composeEnhances = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+    name: "Tetflix"
+});
+
+export default () => {
+    const store = createStore(
+        reducers, 
+        composeEnhances(applyMiddleware(thunx)));
+
+    return store;
+}

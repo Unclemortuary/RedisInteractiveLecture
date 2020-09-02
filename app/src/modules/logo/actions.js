@@ -7,6 +7,6 @@ const initApp = createAction(
 );
 
 export const initAppAfterDelay = (dispatch) => setTimeout(
-    dispatch(initApp),
-    500
+    () => dispatch(initApp()),
+    2500
 );

@@ -21,11 +21,21 @@
 
 import { handleAction } from 'redux-actions';
 import { INIT } from './logo/actionTypes.js';
+import { combineReducers } from 'redux';
 
 const initialized = handleAction(
     INIT,
-    (state, action) => action.value,
+    (state, action) => action.payload,
     false
 );
 
-export default initialized;
+const currentUser = handleAction(
+    "sas",
+    (state, action) => action.payload,
+    0
+);
+
+export default combineReducers({
+    initialized,
+    currentUser
+});
