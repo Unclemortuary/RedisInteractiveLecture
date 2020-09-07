@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const autoprefixer = require('autoprefixer');
 
 module.exports = {
     entry: "./src/main/main.js",
@@ -17,6 +18,34 @@ module.exports = {
                 options: {
                     presets: ['@babel/preset-react']
                 }
+            },
+            {
+                test: /\.s?css$/,
+                use: [
+                    {
+                        loader: 'style-loader'
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true,
+                        }
+                    },
+                    {
+                        loader: require.resolve('postcss-loader'),
+                        options: {
+                            plugins: [
+                                autoprefixer()
+                            ]
+                        }
+                    },
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            sourceMap: true,
+                        }
+                    }
+                ]
             }
         ]
     },

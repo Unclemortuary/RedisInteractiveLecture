@@ -8,13 +8,13 @@ const Logo = () => {
     const show = !useSelector(isAppInitialized);
     console.log(show);
     const dispatch = useDispatch();
-    useEffect(() => {
-        if (show) {
-            initAppAfterDelay(dispatch);
-        }
-    })
+    // useEffect(() => {
+    //     if (show) {
+    //         initAppAfterDelay(dispatch);
+    //     }
+    // })
 
-    return show ? <span>Tetflix</span> : null;
+    return show ? <span className="logo">Tetflix</span> : null;
 };
 
 export default Logo;
