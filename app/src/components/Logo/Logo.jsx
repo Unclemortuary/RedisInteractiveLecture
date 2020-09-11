@@ -6,15 +6,17 @@ import { initAppAfterDelay } from '../../modules/logo/actions.js';
 
 const Logo = () => {
     const show = !useSelector(isAppInitialized);
-    console.log(show);
     const dispatch = useDispatch();
-    // useEffect(() => {
-    //     if (show) {
-    //         initAppAfterDelay(dispatch);
-    //     }
-    // })
+    useEffect(() => {
+        if (show) {
+            initAppAfterDelay(dispatch);
+        }
+    })
 
-    return show ? <span className="logo">Tetflix</span> : null;
+    return show ? (
+        <div className="l-container">
+            <span className="logo">Tetflix</span>
+        </div> ) : null;
 };
 
 export default Logo;

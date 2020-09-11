@@ -21,6 +21,7 @@
 
 import { handleAction } from 'redux-actions';
 import { INIT } from './logo/actionTypes.js';
+import { USER_PICKED } from './user/actionTypes.js';
 import { combineReducers } from 'redux';
 
 const initialized = handleAction(
@@ -30,7 +31,7 @@ const initialized = handleAction(
 );
 
 const currentUser = handleAction(
-    "sas",
+    USER_PICKED,
     (state, action) => action.payload,
     0
 );
