@@ -19,9 +19,10 @@
 //     }
 // };
 
-import { handleAction } from 'redux-actions';
+import { handleAction, handleActions } from 'redux-actions';
 import { INIT } from './logo/actionTypes.js';
 import { USER_PICKED } from './user/actionTypes.js';
+import { COLOR_CHANGED, COLOR_PICKER_CLICKED } from './colorPicker/actionTypes.js';
 import { combineReducers } from 'redux';
 
 const initialized = handleAction(
@@ -36,7 +37,25 @@ const currentUser = handleAction(
     0
 );
 
+const color = handleActions(
+    {
+        [COLOR_CHANGED]: (state, action) => ({
+            ...state,
+            value: action.payload.hex
+        }),
+        [COLOR_PICKER_CLICKED]: (state) => ({
+            ...state,
+            show: !state.show
+        })
+    }, 
+    {
+        show: false,
+        value: '#040404'
+    }
+);
+
 export default combineReducers({
     initialized,
-    currentUser
+    currentUser,
+    color
 });
