@@ -3,9 +3,10 @@ const path = require('path');
 
 var app = express();
 
-app.use(express.static(__dirname));
+app.use('/dist', express.static(path.join(__dirname, 'dist')));
+app.use('/images', express.static(path.join(__dirname, 'dist', 'images')));
 
-app.get(`/*`, function (_, res) {
+app.get('/', function (_, res) {
     res.sendFile(path.resolve(__dirname, 'tetflix.html'));
 });
 
