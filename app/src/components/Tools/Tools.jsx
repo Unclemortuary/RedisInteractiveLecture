@@ -14,9 +14,16 @@ const Tools = () => {
     
     return (
         <div className="tools">
-            <Button onClick={() => dispacth(onColorPickerClick())} />
             { needShowColorPicker && <ColorPicker /> }
-            <Button onClick={() => console.log('show users')} />
+            <Button 
+                className="color-picker-btn" 
+                onClick={() => dispacth(onColorPickerClick())} 
+                message={"Change color scheme"}
+                />
+            <Button 
+                onClick={() => console.log('show users')} 
+                message={"Refresh online users"}
+                />
         </div>
     )
 };

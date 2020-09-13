@@ -50,7 +50,7 @@ const color = handleActions(
     }, 
     {
         show: false,
-        value: '#040404'
+        value: '#FFFFFF'
     }
 );
 
