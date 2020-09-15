@@ -44,6 +44,48 @@
         }
     }
 
+    .post-header {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .online-users-container {
+        text-align: center;
+        width: 400px;
+        margin-right: 100px;
+        margin-top: -125px;
+
+        .online-users-tab {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+
+            .bulb-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-between;
+                height: 88px;
+
+                .online-user-bulb {
+                    width: 60px;
+                    height: 60px;
+                    border-radius: 50%;
+                    outline: none;
+                    border: none;
+            
+                    &.offline {
+                        background: linear-gradient(13deg, darkgrey, transparent 125%);
+                    }
+            
+                    &.online {
+                        background: linear-gradient(13deg, lawngreen, transparent 150%);
+                    }
+                }
+            }
+        }
+    }
+
     .message-container {
         margin-left: 150px;
 
@@ -53,8 +95,6 @@
     }
 
     .films-container {
-        // height: 670px;
-        // width: 1550px;
         height: 62vh;
         width: 81vw;
         margin: 0 auto;
