@@ -107,17 +107,21 @@
         .film-box {
             text-align: center;
             padding: 15px 5px;
+            display: flex;
+            flex-direction: column;
 
             .film {
                 margin: 5px 5px;
                 width: 140px;
-                height: 160px;
+                height: 210px;
                 border-style: groove;
+                border-width: thin;
             }
 
             .film-title {
                 padding-top: 5px;
                 font-size: larger;
+                width: 140px;
             }
         }
     }

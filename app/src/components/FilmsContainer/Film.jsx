@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Film = ({ id, title }) => {
+const Film = ({ id, title, cover }) => {
     return (
         <div className="film-box">
-            <div className="film"></div>
+            <img className="film" src={cover} />
             <span className="film-title">{title}</span>
         </div>
         
