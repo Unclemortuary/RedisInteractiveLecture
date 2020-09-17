@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace Tetflix.Controllers
 {
@@ -11,11 +12,6 @@ namespace Tetflix.Controllers
     [Route("[controller]")]
     public class TetflixController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         private readonly ILogger<TetflixController> _logger;
 
         public TetflixController(ILogger<TetflixController> logger)
@@ -27,6 +23,12 @@ namespace Tetflix.Controllers
         public ActionResult<string> GetCurrentColor()
         {
             return "#FFFFFF";
+        }
+
+        [HttpGet("recommendations")]
+        public JsonResult GetRecommendations()
+        {
+            return new JsonResult(Data.Films);
         }
     }
 }

@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Tools from '../Tools/Tools.jsx';
 import img from './unnamed.png';
 
-import { getColor } from '../../modules/colorPicker/actions.js';
+import { requestForColor } from '../../modules/colorPicker/actions.js';
 import { getUserId, getFetchColorRequestId } from '../../modules/selectors.js';
 
 const Header = () => {
@@ -14,7 +14,7 @@ const Header = () => {
 
     useEffect(() => {
         async function fetchData() {
-            await dispatch(getColor());
+            await dispatch(requestForColor());
         };
         fetchData();
     }, [requestId]);

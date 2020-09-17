@@ -5,7 +5,9 @@ export const showContent = state => isUserPicked(state);
 
 export const getCurrentColor = state => state.color.value;
 export const showColorPicker = state => state.color.show;
-
 export const getFetchColorRequestId = state => state.color.requestId;
+
+export const getFilms = state => state.recommendations.data;
+export const getFetchFilmsRequestId = state => state.recommendations.requestId;
 
 export const getUserId = state => state.currentUser;

@@ -19,10 +19,11 @@
 //     }
 // };
 
-import { handleAction, handleActions, combineActions } from 'redux-actions';
+import { handleAction, handleActions } from 'redux-actions';
 import { INIT } from './logo/actionTypes.js';
 import { USER_PICKED } from './user/actionTypes.js';
-import { COLOR_CHANGED, COLOR_PICKER_CLICKED, GET_CURRENT_COLOR, FETCH } from './colorPicker/actionTypes.js';
+import { COLOR_CHANGED, COLOR_PICKER_CLICKED, FETCH_COLOR } from './colorPicker/actionTypes.js';
+import { FETCH_FILMS, FILMS_FETCHED } from './recommedations/actionTypes.js';
 import { combineReducers } from 'redux';
 
 const initialized = handleAction(
@@ -37,20 +38,33 @@ const currentUser = handleAction(
     0
 );
 
-const color = handleActions(
+const recommendations = handleActions(
     {
-        [FETCH]: (state, action) => ({
+        [FETCH_FILMS]: (state, action) => ({
             ...state,
             requestId: state.requestId + 1
         }),
-        [combineActions(COLOR_CHANGED, GET_CURRENT_COLOR)]: (state, action) => {
-            console.log('sas');
+        [FILMS_FETCHED]: (state, action) => ({
+            ...state,
+            data: action.payload
+        })
+    },
+    {
+        requestId: 0,
+        data: []
+    }
+);
 
-            return ({
-                ...state,
-                value: action.payload
-            });
-        },
+const color = handleActions(
+    {
+        [FETCH_COLOR]: (state, action) => ({
+            ...state,
+            requestId: state.requestId + 1
+        }),
+        [COLOR_CHANGED]: (state, action) => ({
+            ...state,
+            value: action.payload
+        }),
         [COLOR_PICKER_CLICKED]: (state) => ({
             ...state,
             show: !state.show
@@ -66,5 +80,6 @@ const color = handleActions(
 export default combineReducers({
     initialized,
     currentUser,
+    recommendations,
     color
 });
