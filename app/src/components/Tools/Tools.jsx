@@ -5,11 +5,10 @@ import Button from './Button.jsx';
 import ColorPicker from './ColorPicker.jsx';
 
 import { onColorPickerClick } from '../../modules/colorPicker/actions.js';
-import { showColorPicker, showOnlineUsers } from '../../modules/selectors.js';
+import { showColorPicker } from '../../modules/selectors.js';
 
 const Tools = () => {
     const needShowColorPicker = useSelector(showColorPicker);
-    const needShowOnlineUsers = useSelector(showOnlineUsers);
     const dispacth = useDispatch();
     
     return (

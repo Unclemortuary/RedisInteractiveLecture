@@ -11,7 +11,7 @@ const ColorPicker = () => {
 
     return <SketchPicker 
             color={currentColor}
-            onChangeComplete={(color) => dispatch(changeColor(color))}/>
+            onChangeComplete={(color) => dispatch(changeColor(color.hex))}/>
 };
 
 export default ColorPicker;

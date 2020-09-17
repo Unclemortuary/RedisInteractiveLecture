@@ -6,6 +6,6 @@ export const showContent = state => isUserPicked(state);
 export const getCurrentColor = state => state.color.value;
 export const showColorPicker = state => state.color.show;
 
-export const showOnlineUsers = state => false;
+export const getFetchColorRequestId = state => state.color.requestId;
 
 export const getUserId = state => state.currentUser;
