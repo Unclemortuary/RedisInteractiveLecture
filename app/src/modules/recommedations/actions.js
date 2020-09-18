@@ -9,6 +9,6 @@ export const setRecommendations = createAction(
 
 export const invokeFetch = createAction(FETCH_FILMS);
 
-export const requestForRecommendations = () => dispatch => {
-    fetchRecommendations().then(films => dispatch(setRecommendations(films)));
+export const requestForRecommendations = (userId) => dispatch => {
+    fetchRecommendations(userId).then(films => dispatch(setRecommendations(films)));
 };

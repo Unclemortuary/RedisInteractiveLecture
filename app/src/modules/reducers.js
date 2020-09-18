@@ -42,14 +42,17 @@ const recommendations = handleActions(
     {
         [FETCH_FILMS]: (state, action) => ({
             ...state,
-            requestId: state.requestId + 1
+            requestId: state.requestId + 1,
+            isLoading: true
         }),
         [FILMS_FETCHED]: (state, action) => ({
             ...state,
-            data: action.payload
+            data: action.payload,
+            isLoading: false
         })
     },
     {
+        isLoading: true,
         requestId: 0,
         data: []
     }

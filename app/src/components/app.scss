@@ -30,9 +30,16 @@
         }
     }
 
+
+    .color-picker-container {
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+    }
+
     .btn {
-        width: 100px;
-        height: 60px;
+        width: 125px;
+        height: 65px;
         border-radius: 50%;
         margin: 0px 10px;
         outline: none;
@@ -96,7 +103,7 @@
 
     .films-container {
         height: 62vh;
-        width: 81vw;
+        width: 94vw;
         margin: 0 auto;
         display: flex;
         flex-direction: row;

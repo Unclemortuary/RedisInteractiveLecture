@@ -15,3 +15,9 @@ export const requestForColor = () => async dispatch => {
     const color = await fetchColor();
     dispatch(changeColor(color));
 };
+
+export const onSaveButtonClick = () => dispath => {
+    dispath(onColorPickerClick());
+    // request to BE;
+    dispath(requestForColor());
+};

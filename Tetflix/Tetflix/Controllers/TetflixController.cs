@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Tetflix.Services;
 
 namespace Tetflix.Controllers
 {
@@ -12,11 +13,11 @@ namespace Tetflix.Controllers
     [Route("[controller]")]
     public class TetflixController : ControllerBase
     {
-        private readonly ILogger<TetflixController> _logger;
+        private readonly IRecommendationsService recommendationService;
 
-        public TetflixController(ILogger<TetflixController> logger)
+        public TetflixController(IRecommendationsService recommendationsService)
         {
-            _logger = logger;
+            recommendationService = recommendationsService;
         }
 
         [HttpGet("color")]
@@ -25,10 +26,10 @@ namespace Tetflix.Controllers
             return "#FFFFFF";
         }
 
-        [HttpGet("recommendations")]
-        public JsonResult GetRecommendations()
+        [HttpGet("recommendations/{userId}")]
+        public JsonResult GetRecommendations([FromRoute]int userId)
         {
-            return new JsonResult(Data.Films);
+            return new JsonResult(recommendationService.GetRecommendations(userId));
         }
     }
 }

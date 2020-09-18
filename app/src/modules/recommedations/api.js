@@ -1,3 +1,3 @@
 import api from '../api.js';
 
-export const fetchRecommendations = () => api().get('recommendations').then(response => response.data);
+export const fetchRecommendations = (userId) => api().get(`recommendations/${userId}`).then(response => response.data);

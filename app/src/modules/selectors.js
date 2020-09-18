@@ -9,5 +9,6 @@ export const getFetchColorRequestId = state => state.color.requestId;
 
 export const getFilms = state => state.recommendations.data;
 export const getFetchFilmsRequestId = state => state.recommendations.requestId;
+export const showFilmsLoader = state => state.recommendations.isLoading;
 
 export const getUserId = state => state.currentUser;
