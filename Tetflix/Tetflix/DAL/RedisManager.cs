@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Tetflix.DAL
 {
-    public class RedisManager : IRedisDB
+    public class RedisManager : IRedisDB, IRedisCache
     {
         private static Lazy<ConnectionMultiplexer> lazyConnection = new Lazy<ConnectionMultiplexer>(
             () => ConnectionMultiplexer.Connect("localhost:7001"));
@@ -32,8 +32,29 @@ namespace Tetflix.DAL
             return db.HashGet(key, "data");
         }
 
+        public TValue GetValue<TKey, TValue>(TKey key, Func<TValue> fetch, TimeSpan? expiry)
+        {
+            var redisKey = RedisKey(key);
+
+            var db = lazyConnection.Value.GetDatabase();
+
+            var redisValue = db.StringGet(redisKey);
+            if (!redisValue.IsNull)
+                return Value<TValue>(redisValue);
+
+            var fetchedValue = fetch();
+            redisValue = RedisValue(fetchedValue);
+            db.StringSet(redisKey, redisValue, expiry);
+
+            return fetchedValue;
+        }
+
         private static RedisKey RedisKey<TKey>(TKey key) => $"{prefix}{key}";
 
         private static RedisValue RedisValue<TValue>(TValue value) => JsonConvert.SerializeObject(value);
+
+        private static TValue Value<TValue>(RedisValue value) => value.IsNull
+                ? default(TValue)
+                : JsonConvert.DeserializeObject<TValue>(value);
     }
 }

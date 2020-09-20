@@ -30,7 +30,9 @@ namespace Tetflix
 
             //services.AddDistributedMemoryCache();
 
-            services.AddSingleton<IRedisDB, RedisManager>();
+            services.AddSingleton<RedisManager>();
+            services.AddSingleton<IRedisDB>(f => f.GetRequiredService<RedisManager>());
+            services.AddSingleton<IRedisCache>(f => f.GetRequiredService<RedisManager>());
 
             //services.AddStackExchangeRedisCache(options =>
             //{

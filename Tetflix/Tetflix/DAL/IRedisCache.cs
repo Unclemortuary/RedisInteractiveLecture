@@ -4,6 +4,6 @@ namespace Tetflix.DAL
 {
     public interface IRedisCache
     {
-        TValue GetValue<TKey, TValue>(TKey key, Func<TKey, TValue> fetch);
+        TValue GetValue<TKey, TValue>(TKey key, Func<TValue> fetch, TimeSpan? expiry);
     }
 }
