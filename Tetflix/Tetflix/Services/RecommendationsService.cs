@@ -12,7 +12,7 @@ namespace Tetflix.Services
         public IReadOnlyList<Film> GetRecommendations(int userId)
         {
             // todo - add stub services
-            Thread.Sleep(3000);
+            //Thread.Sleep(3000);
 
             int totalNumber = 20 + userId;
             int filmsCount = Data.Films.Count;

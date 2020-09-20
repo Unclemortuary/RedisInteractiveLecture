@@ -26,6 +26,13 @@ namespace Tetflix
         {
             services.AddControllers();
             services.RegisterServices();
+
+            //services.AddDistributedMemoryCache();
+
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = "localhost:7001";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,7 +45,7 @@ namespace Tetflix
 
             app.UseRouting();
 
-            app.UseCors(p => p.AllowAnyOrigin());
+            app.UseCors(p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseAuthorization();
 

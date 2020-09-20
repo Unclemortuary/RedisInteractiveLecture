@@ -14,7 +14,7 @@ const ColorPicker = () => {
             <SketchPicker 
                 color={currentColor}
                 onChangeComplete={(color) => dispatch(changeColor(color.hex))}/>
-            <button className="save-button" onClick={() => dispatch(onSaveButtonClick())}>Save</button>
+            <button className="save-button" onClick={() => dispatch(onSaveButtonClick(currentColor))}>Save</button>
         </div>
     ) 
 };
