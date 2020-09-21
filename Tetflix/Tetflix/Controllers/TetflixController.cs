@@ -16,11 +16,13 @@ namespace Tetflix.Controllers
     {
         private readonly IRecommendationsService recommendationsService;
         private readonly IColorService colorService;
+        private readonly IUsersService usersService;
 
-        public TetflixController(IRecommendationsService recommendationsService, IColorService colorService)
+        public TetflixController(IRecommendationsService recommendationsService, IColorService colorService, IUsersService usersService)
         {
             this.recommendationsService = recommendationsService;
             this.colorService = colorService;
+            this.usersService = usersService;
         }
 
         [HttpGet("color/{userId}")]
@@ -40,6 +42,25 @@ namespace Tetflix.Controllers
         public JsonResult GetRecommendations([FromRoute]int userId)
         {
             return new JsonResult(recommendationsService.GetRecommendations(userId));
+        }
+
+        [HttpPut("login")]
+        public ActionResult UserLogin([FromBody]int userId)
+        {
+            usersService.Login(userId);
+            return Ok();
+        }
+
+        [HttpGet("onlineUsers")]
+        public JsonResult GetOnlineUsers()
+        {
+            return new JsonResult(usersService.GetOnlineUsers());
+        }
+
+        [HttpGet("onlineFriends")]
+        public JsonResult GetOnlineFriends()
+        {
+            return new JsonResult(usersService.GetOnlineFriends());
         }
     }
 }

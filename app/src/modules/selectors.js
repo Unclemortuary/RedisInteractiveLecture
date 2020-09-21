@@ -1,5 +1,5 @@
 export const isAppInitialized = state => state.initialized;
-export const isUserPicked = state => state.currentUser !== 0;
+export const isUserPicked = state => state.users.currentUser !== 0;
 export const showUserPicker = state => isAppInitialized(state) && !isUserPicked(state);
 export const showContent = state => isUserPicked(state);
 
@@ -11,4 +11,4 @@ export const getFilms = state => state.recommendations.data;
 export const getFetchFilmsRequestId = state => state.recommendations.requestId;
 export const showFilmsLoader = state => state.recommendations.isLoading;
 
-export const getUserId = state => state.currentUser;
+export const getUserId = state => state.users.currentUser;

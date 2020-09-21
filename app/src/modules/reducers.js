@@ -1,27 +1,6 @@
-// {
-//     initialized: false,
-//     currentUser: 12,
-//     onlineUsersTab: {
-//         show: false,
-//         data: []
-//     },
-//     recommendations:[
-//         {
-
-//         },
-//         {
-
-//         }
-//     ],
-//     colorPicker: {
-//         show: false,
-//         value: "#40923"
-//     }
-// };
-
 import { handleAction, handleActions } from 'redux-actions';
 import { INIT } from './logo/actionTypes.js';
-import { USER_PICKED } from './user/actionTypes.js';
+import { USER_PICKED, FETCH_ONLINE_USERS } from './user/actionTypes.js';
 import { COLOR_CHANGED, COLOR_PICKER_CLICKED, FETCH_COLOR } from './colorPicker/actionTypes.js';
 import { FETCH_FILMS, FILMS_FETCHED } from './recommedations/actionTypes.js';
 import { combineReducers } from 'redux';
@@ -32,10 +11,21 @@ const initialized = handleAction(
     false
 );
 
-const currentUser = handleAction(
-    USER_PICKED,
-    (state, action) => action.payload,
-    0
+const users = handleActions(
+    {
+        [USER_PICKED]: (state, action) => ({
+            ...state,
+            currentUser: action.payload
+        }),
+        [FETCH_ONLINE_USERS]: (state, action) => ({
+            ...state,
+            online: action.payload
+        })
+    },
+    {
+        currentUser: 0,
+        online: []
+    }
 );
 
 const recommendations = handleActions(
@@ -82,7 +72,7 @@ const color = handleActions(
 
 export default combineReducers({
     initialized,
-    currentUser,
+    users,
     recommendations,
     color
 });
