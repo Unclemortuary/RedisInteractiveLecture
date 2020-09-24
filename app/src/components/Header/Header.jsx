@@ -22,7 +22,7 @@ const Header = () => {
     return (
         <div className="header-container">
             <img className="header" src={img}/>
-            <div className="h-user">User id: {userId}</div>
+            <div className="h-user"> <span>User id: {userId}</span></div>
             <Tools/>
         </div>
     )

@@ -20,6 +20,14 @@
             color: aliceblue;
             border-style: ridge;
             border-width: thin;
+            text-align: center;
+            font-size: larger;
+            vertical-align: middle;
+            line-height: 100px;
+
+            span {
+                margin-top: auto;
+            }
         }
 
         .tools {
@@ -116,6 +124,8 @@
             padding: 15px 5px;
             display: flex;
             flex-direction: column;
+            transition: all .2s ease-in-out;
+            
 
             .film {
                 margin: 5px 5px;
@@ -130,6 +140,10 @@
                 font-size: larger;
                 width: 140px;
             }
+        }
+
+        .film-box:hover { 
+            transform: scale(1.1); 
         }
     }
 
