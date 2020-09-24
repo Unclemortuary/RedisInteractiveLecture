@@ -1,6 +1,6 @@
 import { createAction } from 'redux-actions';
-import { USER_PICKED, FETCH_ONLINE_USERS } from './actionTypes.js';
-import { getOnlineUsers, getOnlineFriends } from './api.js';
+import { USER_PICKED, USERS_FETCHED, FETCH_USERS } from './actionTypes.js';
+import { getOnlineUsers, loginRequest, logoutRequest } from './api.js';
 
 export const pickUser = createAction(
     USER_PICKED,
@@ -8,14 +8,20 @@ export const pickUser = createAction(
 );
 
 export const usersFetched = createAction(
-    FETCH_ONLINE_USERS,
+    USERS_FETCHED,
     users => users
 );
 
-export const fetchOnlineUsers = () => dispatch => {
-    getOnlineUsers().then(users => dispatch(usersFetched(users)));
+export const invokeFetch = createAction(FETCH_USERS);
+
+export const login = (userId) => dispatch => {
+    loginRequest(userId).then(() => dispatch(pickUser(userId)));
 };
 
-export const fetchOnlineFriends = () => dispatch => {
-    getOnlineFriends().then(users => dispatch(usersFetched(users)));
+// export const logout = (userId) => dispatch => {
+//     logoutRequest(userId).then(() => dispatch(pickUser(userId)));
+// };
+
+export const fetchOnlineUsers = (userId) => dispatch => {
+    getOnlineUsers(userId).then(users => dispatch(usersFetched(users)));
 };

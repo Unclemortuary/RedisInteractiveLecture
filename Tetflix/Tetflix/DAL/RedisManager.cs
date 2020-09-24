@@ -15,16 +15,7 @@ namespace Tetflix.DAL
         private static Lazy<ConnectionMultiplexer> lazyConnection = new Lazy<ConnectionMultiplexer>(
             () => ConnectionMultiplexer.Connect("localhost:7001"));
 
-        private static readonly string prefix = "localhost/tetflix";
-
-        public RedisManager()
-        {
-            var db = lazyConnection.Value.GetDatabase();
-            var stubOnlineUsers = new int[] { 10011, 2345, 23215, 143255, 2432, 1 };
-            var friends = new int[] { 1, 2, 3, 4, 5 };
-            CreateSet(UsersService.OnlineUsersKey, stubOnlineUsers, db);
-            CreateSet(UsersService.FriendsKey, friends, db);
-        }
+        private static readonly string prefix = "localhost:tetflix";
 
         public void SaveStringValue(string key, string value)
         {
@@ -65,31 +56,30 @@ namespace Tetflix.DAL
             return redisResult.Select(v => (int)v).ToList();
         }
 
+        public void SetExpiry(string key, TimeSpan expiry)
+        {
+            var db = lazyConnection.Value.GetDatabase();
+            db.KeyExpire(key, expiry);
+        }
+
         public void AddValueToSet(string key, int value)
         {
             var db = lazyConnection.Value.GetDatabase();
             db.SetAdd(key, value);
         }
 
-        public IReadOnlyList<int> IntersectTwoSets(string firstKey, string secondKey)
+        public void RemoveValueFromSet(string key, int value)
         {
             var db = lazyConnection.Value.GetDatabase();
-            var intersection = db.SetCombine(SetOperation.Intersect, new RedisKey[] { firstKey, secondKey });
-            return intersection.Select(v => (int)v).ToList();
+            db.SetRemove(key, value);
         }
 
-        private static RedisKey RedisKey<TKey>(TKey key) => $"{prefix}{key}";
+        private static RedisKey RedisKey<TKey>(TKey key) => $"{prefix}:{key}";
 
         private static RedisValue RedisValue<TValue>(TValue value) => JsonConvert.SerializeObject(value);
 
         private static TValue Value<TValue>(RedisValue value) => value.IsNull
                 ? default(TValue)
                 : JsonConvert.DeserializeObject<TValue>(value);
-
-        private static void CreateSet(string key, int[] values, IDatabase db)
-        {
-            if (!db.KeyExists(key))
-                db.SetAdd(key, values.Select(v => (RedisValue)v).ToArray());
-        }
     }
 }

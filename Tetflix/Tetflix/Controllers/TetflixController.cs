@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Mvc;
 using Tetflix.Services;
 
 namespace Tetflix.Controllers
@@ -26,41 +19,44 @@ namespace Tetflix.Controllers
         }
 
         [HttpGet("color/{userId}")]
-        public ActionResult<string> GetCurrentColor([FromRoute]int userId)
+        public ActionResult<string> GetCurrentColor([FromRoute] int userId)
         {
             return colorService.GetColor(userId);
         }
 
         [HttpPost("saveColor/{userId}")]
-        public ActionResult SaveColor([FromRoute]int userId, [FromBody]string value)
+        public ActionResult SaveColor([FromRoute] int userId, [FromBody] string value)
         {
             colorService.SetColor(userId, value);
             return Ok();
         }
 
         [HttpGet("recommendations/{userId}")]
-        public JsonResult GetRecommendations([FromRoute]int userId)
+        public JsonResult GetRecommendations([FromRoute] int userId)
         {
+            usersService.Alive(userId);
             return new JsonResult(recommendationsService.GetRecommendations(userId));
         }
 
-        [HttpPut("login")]
-        public ActionResult UserLogin([FromBody]int userId)
+        [HttpPut("login/{userId}")]
+        public ActionResult UserLogin([FromRoute] int userId)
         {
             usersService.Login(userId);
             return Ok();
         }
 
-        [HttpGet("onlineUsers")]
-        public JsonResult GetOnlineUsers()
+        [HttpPut("logout/{userId}")]
+        public ActionResult UserLogout([FromRoute] int userId)
         {
-            return new JsonResult(usersService.GetOnlineUsers());
+            usersService.Logout(userId);
+            return Ok();
         }
 
-        [HttpGet("onlineFriends")]
-        public JsonResult GetOnlineFriends()
+        [HttpGet("onlineUsers/{userId}")]
+        public JsonResult GetOnlineUsers([FromRoute] int userId)
         {
-            return new JsonResult(usersService.GetOnlineFriends());
+            usersService.Alive(userId);
+            return new JsonResult(usersService.GetOnlineUsers());
         }
     }
 }

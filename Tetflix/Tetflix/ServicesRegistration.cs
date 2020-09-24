@@ -12,7 +12,8 @@ namespace Tetflix
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
             return services.AddTransient<IRecommendationsService, RecommendationsService>()
-                           .AddTransient<IColorService, ColorService>();
+                           .AddTransient<IColorService, ColorService>()
+                           .AddSingleton<IUsersService, UsersService>();
         }
     }
 }

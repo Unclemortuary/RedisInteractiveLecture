@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Tetflix.DAL
 {
@@ -8,6 +9,7 @@ namespace Tetflix.DAL
         void SaveStringValue(string key, string value);
         IReadOnlyList<int> GetSetValues(string key);
         void AddValueToSet(string key, int value);
-        IReadOnlyList<int> IntersectTwoSets(string firstKey, string secondKey);
+        void RemoveValueFromSet(string key, int value);
+        void SetExpiry(string key, TimeSpan expiry);
     }
 }

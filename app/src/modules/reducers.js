@@ -1,6 +1,6 @@
 import { handleAction, handleActions } from 'redux-actions';
 import { INIT } from './logo/actionTypes.js';
-import { USER_PICKED, FETCH_ONLINE_USERS } from './user/actionTypes.js';
+import { USER_PICKED, USERS_FETCHED, FETCH_USERS } from './user/actionTypes.js';
 import { COLOR_CHANGED, COLOR_PICKER_CLICKED, FETCH_COLOR } from './colorPicker/actionTypes.js';
 import { FETCH_FILMS, FILMS_FETCHED } from './recommedations/actionTypes.js';
 import { combineReducers } from 'redux';
@@ -17,14 +17,19 @@ const users = handleActions(
             ...state,
             currentUser: action.payload
         }),
-        [FETCH_ONLINE_USERS]: (state, action) => ({
+        [USERS_FETCHED]: (state, action) => ({
             ...state,
             online: action.payload
+        }),
+        [FETCH_USERS]: (state) => ({
+            ...state,
+            requestId: state.requestId + 1
         })
     },
     {
         currentUser: 0,
-        online: []
+        online: [],
+        requestId: 0
     }
 );
 

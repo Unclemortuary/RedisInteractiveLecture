@@ -12,3 +12,5 @@ export const getFetchFilmsRequestId = state => state.recommendations.requestId;
 export const showFilmsLoader = state => state.recommendations.isLoading;
 
 export const getUserId = state => state.users.currentUser;
+export const getOnlineUsers = state => state.users.online;
+export const getFetchUsersRequestId = state => state.users.requestId;

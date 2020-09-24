@@ -6,6 +6,7 @@ import ColorPicker from './ColorPicker.jsx';
 
 import { onColorPickerClick } from '../../modules/colorPicker/actions.js';
 import { invokeFetch } from '../../modules/recommedations/actions.js';
+import { invokeFetch as invokeUsersFetch } from '../../modules/user/actions.js';
 import { showColorPicker } from '../../modules/selectors.js';
 
 const Tools = () => {
@@ -21,7 +22,7 @@ const Tools = () => {
                 message={"Change color scheme"}
                 />
             <Button 
-                onClick={() => console.log('show users')} 
+                onClick={() => dispacth(invokeUsersFetch())} 
                 message={"Refresh online users"}
                 />
             <Button 

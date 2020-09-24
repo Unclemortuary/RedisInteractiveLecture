@@ -5,7 +5,7 @@ const UserIcon = ({ isOnline, id}) => {
     return (
         <div className="bulb-container">
             <button className={`online-user-bulb ${className}`}/>
-            <span>{id}</span>
+            <span>Id: {id}</span>
         </div>
     )
 };

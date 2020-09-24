@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Tetflix.Services
 {
     public interface IUsersService
     {
         void Login(int userId);
+        void Alive(int userId);
+        void Logout(int userId);
         IReadOnlyList<int> GetOnlineUsers();
-        IReadOnlyList<int> GetOnlineFriends();
     }
 }
