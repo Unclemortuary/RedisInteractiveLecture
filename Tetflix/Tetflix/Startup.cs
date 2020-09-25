@@ -9,7 +9,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Tetflix.DAL;
 
 namespace Tetflix
 {
@@ -27,17 +26,6 @@ namespace Tetflix
         {
             services.AddControllers();
             services.RegisterServices();
-
-            //services.AddDistributedMemoryCache();
-
-            services.AddSingleton<RedisManager>();
-            services.AddSingleton<IRedisDB>(f => f.GetRequiredService<RedisManager>());
-            services.AddSingleton<IRedisCache>(f => f.GetRequiredService<RedisManager>());
-
-            //services.AddStackExchangeRedisCache(options =>
-            //{
-            //    options.Configuration = "localhost:7001";
-            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

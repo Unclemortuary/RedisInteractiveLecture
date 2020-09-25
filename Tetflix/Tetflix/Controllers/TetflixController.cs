@@ -9,54 +9,23 @@ namespace Tetflix.Controllers
     {
         private readonly IRecommendationsService recommendationsService;
         private readonly IColorService colorService;
-        private readonly IUsersService usersService;
 
-        public TetflixController(IRecommendationsService recommendationsService, IColorService colorService, IUsersService usersService)
+        public TetflixController(IRecommendationsService recommendationsService, IColorService colorService)
         {
             this.recommendationsService = recommendationsService;
             this.colorService = colorService;
-            this.usersService = usersService;
+        }
+
+        [HttpGet("recommendations/{userId}")]
+        public JsonResult GetRecommendations([FromRoute] int userId)
+        {
+            return new JsonResult(recommendationsService.GetRecommendations(userId));
         }
 
         [HttpGet("color/{userId}")]
         public ActionResult<string> GetCurrentColor([FromRoute] int userId)
         {
             return colorService.GetColor(userId);
-        }
-
-        [HttpPost("saveColor/{userId}")]
-        public ActionResult SaveColor([FromRoute] int userId, [FromBody] string value)
-        {
-            colorService.SetColor(userId, value);
-            return Ok();
-        }
-
-        [HttpGet("recommendations/{userId}")]
-        public JsonResult GetRecommendations([FromRoute] int userId)
-        {
-            usersService.Alive(userId);
-            return new JsonResult(recommendationsService.GetRecommendations(userId));
-        }
-
-        [HttpPut("login/{userId}")]
-        public ActionResult UserLogin([FromRoute] int userId)
-        {
-            usersService.Login(userId);
-            return Ok();
-        }
-
-        [HttpPut("logout/{userId}")]
-        public ActionResult UserLogout([FromRoute] int userId)
-        {
-            usersService.Logout(userId);
-            return Ok();
-        }
-
-        [HttpGet("onlineUsers/{userId}")]
-        public JsonResult GetOnlineUsers([FromRoute] int userId)
-        {
-            usersService.Alive(userId);
-            return new JsonResult(usersService.GetOnlineUsers());
         }
     }
 }
