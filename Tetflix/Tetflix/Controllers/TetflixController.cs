@@ -27,5 +27,12 @@ namespace Tetflix.Controllers
         {
             return colorService.GetColor(userId);
         }
+
+        [HttpPost("saveColor/{userId}")]
+        public ActionResult SaveColor([FromRoute] int userId, [FromBody] string value)
+        {
+            colorService.SetColor(userId, value);
+            return Ok();
+        }
     }
 }
