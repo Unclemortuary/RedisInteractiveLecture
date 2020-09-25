@@ -48,6 +48,31 @@ namespace Tetflix.DAL
             return fetchedValue;
         }
 
+        public IReadOnlyList<int> GetSetValues(string key)
+        {
+            var db = lazyConnection.Value.GetDatabase();
+            var redisResult = db.SetMembers(key);
+            return redisResult.Select(v => (int)v).ToList();
+        }
+
+        public void SetExpiry(string key, TimeSpan expiry)
+        {
+            var db = lazyConnection.Value.GetDatabase();
+            db.KeyExpire(key, expiry);
+        }
+
+        public void AddValueToSet(string key, int value)
+        {
+            var db = lazyConnection.Value.GetDatabase();
+            db.SetAdd(key, value);
+        }
+
+        public void RemoveValueFromSet(string key, int value)
+        {
+            var db = lazyConnection.Value.GetDatabase();
+            db.SetRemove(key, value);
+        }
+
         private static RedisKey RedisKey<TKey>(TKey key) => $"{prefix}:{key}";
 
         private static RedisValue RedisValue<TValue>(TValue value) => JsonConvert.SerializeObject(value);

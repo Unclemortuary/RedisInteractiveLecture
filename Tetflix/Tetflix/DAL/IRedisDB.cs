@@ -9,5 +9,10 @@ namespace Tetflix.DAL
     {
         string GetStringValue(string key);
         void SaveStringValue(string key, string value);
+        IReadOnlyList<int> GetSetValues(string key);
+        void AddValueToSet(string key, int value);
+        void RemoveValueFromSet(string key, int value);
+        void SetExpiry(string key, TimeSpan expiry);
+
     }
 }

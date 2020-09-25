@@ -1,12 +1,12 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { pickUser } from '../../modules/user/actions.js';
+import { login } from '../../modules/user/actions.js';
 
 const User = ({ id }) => {
     const dispatch = useDispatch();
     return (
-        <div className="user" onClick={() => dispatch(pickUser(id))}>
+        <div className="user" onClick={() => dispatch(login(id))}>
             <span>User Id: {id}</span>
         </div>
     )

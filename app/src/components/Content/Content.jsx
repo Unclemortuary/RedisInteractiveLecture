@@ -16,7 +16,7 @@ const Content = () => {
             <Header/>
             <div className="post-header">
                 <MessageBox>Recommended for user {userId}:</MessageBox>
-                {/* <OnlineUsersTab/> */}
+                <OnlineUsersTab/>
             </div>
             <FilmsContainer/>
         </>
