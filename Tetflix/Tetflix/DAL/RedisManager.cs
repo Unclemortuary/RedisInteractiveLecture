@@ -1,4 +1,5 @@
-﻿using StackExchange.Redis;
+﻿using Newtonsoft.Json;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,21 +9,51 @@ using System.Threading.Tasks;
 
 namespace Tetflix.DAL
 {
-    public class RedisManager : IRedisDB
+    public class RedisManager : IRedisDB, IRedisCache
     {
         private static Lazy<ConnectionMultiplexer> lazyConnection = new Lazy<ConnectionMultiplexer>(
             () => ConnectionMultiplexer.Connect("localhost:7001"));
 
+        private static readonly string prefix = "localhost:tetflix";
+
         public void SaveStringValue(string key, string value)
         {
             var db = lazyConnection.Value.GetDatabase();
-            db.StringSet(key, value);
+            db.HashSet(key, new HashEntry[]
+            {
+                new HashEntry("data", value)
+            });
         }
 
         public string GetStringValue(string key)
         {
             var db = lazyConnection.Value.GetDatabase();
-            return db.StringGet(key);
+            return db.HashGet(key, "data");
         }
+
+        public TValue GetValue<TKey, TValue>(TKey key, Func<TValue> fetch, TimeSpan? expiry)
+        {
+            var redisKey = RedisKey(key);
+
+            var db = lazyConnection.Value.GetDatabase();
+
+            var redisValue = db.StringGet(redisKey);
+            if (!redisValue.IsNull)
+                return Value<TValue>(redisValue);
+
+            var fetchedValue = fetch();
+            redisValue = RedisValue(fetchedValue);
+            db.StringSet(redisKey, redisValue, expiry);
+
+            return fetchedValue;
+        }
+
+        private static RedisKey RedisKey<TKey>(TKey key) => $"{prefix}:{key}";
+
+        private static RedisValue RedisValue<TValue>(TValue value) => JsonConvert.SerializeObject(value);
+
+        private static TValue Value<TValue>(RedisValue value) => value.IsNull
+                ? default(TValue)
+                : JsonConvert.DeserializeObject<TValue>(value);
     }
 }

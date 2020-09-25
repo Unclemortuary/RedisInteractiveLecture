@@ -3,13 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Tetflix.DAL;
 using Tetflix.Models;
 
 namespace Tetflix.Services
 {
     public class RecommendationsService : IRecommendationsService
     {
+        private readonly IRedisCache redisCahce;
+
+        public RecommendationsService(IRedisCache redisCahce)
+        {
+            this.redisCahce = redisCahce;
+        }
+
         public IReadOnlyList<Film> GetRecommendations(int userId)
+        {
+            return redisCahce.GetValue(GetKey(userId), () => GetRecommendationsInternal(userId), TimeSpan.FromSeconds(30));
+        }
+
+        private IReadOnlyList<Film> GetRecommendationsInternal(int userId)
         {
             Thread.Sleep(3000);
 
@@ -29,5 +42,7 @@ namespace Tetflix.Services
 
             return result;
         }
+
+        private string GetKey(int userId) => $"localhost:tetflix:{userId}:recommendations";
     }
 }

@@ -34,7 +34,9 @@ namespace Tetflix
             //    options.Configuration = "localhost:7001";
             //});
 
-            services.AddSingleton<IRedisDB, RedisManager>();
+            services.AddSingleton<RedisManager>();
+            services.AddSingleton<IRedisDB>(f => f.GetRequiredService<RedisManager>());
+            services.AddSingleton<IRedisCache>(f => f.GetRequiredService<RedisManager>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
