@@ -10,12 +10,14 @@ namespace Tetflix.Controllers
         private readonly IRecommendationsService recommendationsService;
         private readonly IColorService colorService;
         private readonly IUsersService usersService;
+        private readonly IThrottlingService throttlingService;
 
-        public TetflixController(IRecommendationsService recommendationsService, IColorService colorService, IUsersService usersService)
+        public TetflixController(IRecommendationsService recommendationsService, IColorService colorService, IUsersService usersService, IThrottlingService throttlingService)
         {
             this.recommendationsService = recommendationsService;
             this.colorService = colorService;
             this.usersService = usersService;
+            this.throttlingService = throttlingService;
         }
 
         [HttpGet("recommendations/{userId}")]
@@ -57,6 +59,12 @@ namespace Tetflix.Controllers
         {
             usersService.Alive(userId);
             return new JsonResult(usersService.GetOnlineUsers());
+        }
+
+        [HttpGet("throttling")]
+        public ActionResult Throttling()
+        {
+            return Ok();
         }
     }
 }

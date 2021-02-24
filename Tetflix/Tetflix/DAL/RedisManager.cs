@@ -28,7 +28,7 @@ namespace Tetflix.DAL
         public string GetStringValue(string key)
         {
             var db = lazyConnection.Value.GetDatabase();
-            return db.HashGet(key, "data");
+            return db.StringGet(key);
         }
 
         public TValue GetValue<TKey, TValue>(TKey key, Func<TValue> fetch, TimeSpan? expiry)
@@ -71,6 +71,15 @@ namespace Tetflix.DAL
         {
             var db = lazyConnection.Value.GetDatabase();
             db.SetRemove(key, value);
+        }
+
+        public void IncrementValueByKey(string key)
+        {
+            var db = lazyConnection.Value.GetDatabase();
+            var transaction = db.CreateTransaction();
+            transaction.StringIncrementAsync(key);
+            transaction.KeyExpireAsync(key, TimeSpan.FromSeconds(1));
+            transaction.Execute();
         }
 
         private static RedisKey RedisKey<TKey>(TKey key) => $"{prefix}:{key}";

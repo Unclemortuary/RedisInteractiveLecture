@@ -13,7 +13,8 @@ namespace Tetflix
         {
             return services.AddTransient<IRecommendationsService, RecommendationsService>()
                            .AddTransient<IColorService, ColorService>()
-                           .AddSingleton<IUsersService, UsersService>();
+                           .AddSingleton<IUsersService, UsersService>()
+                           .AddTransient<IThrottlingService, ThrottlingService>();
         }
     }
 }

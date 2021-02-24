@@ -19,7 +19,7 @@ namespace Tetflix.Services
 
         public IReadOnlyList<Film> GetRecommendations(int userId)
         {
-            return redisCahce.GetValue(GetKey(userId), () => GetRecommendationsInternal(userId), TimeSpan.FromSeconds(30));
+            return redisCahce.GetValue(GetKey(userId), () => GetRecommendationsInternal(userId), TimeSpan.FromMinutes(1));
         }
 
         private IReadOnlyList<Film> GetRecommendationsInternal(int userId)

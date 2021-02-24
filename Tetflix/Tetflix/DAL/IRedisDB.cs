@@ -13,6 +13,6 @@ namespace Tetflix.DAL
         void AddValueToSet(string key, int value);
         void RemoveValueFromSet(string key, int value);
         void SetExpiry(string key, TimeSpan expiry);
-
+        void IncrementValueByKey(string key);
     }
 }
